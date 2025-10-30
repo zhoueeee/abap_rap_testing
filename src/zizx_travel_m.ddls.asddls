@@ -7,12 +7,13 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define view entity zizx_travel_m
+define root view entity zizx_travel_m
   as select from ztzx_travel_m
-  association [0..1] to /DMO/I_Agency            as _Agency   on $projection.AgencyId = _Agency.AgencyID
-  association [0..1] to /DMO/I_Customer          as _Customer on $projection.AgencyId = _Customer.CustomerID
-  association [0..1] to I_Currency               as _Currency on $projection.CurrencyCode = _Currency.Currency
-  association [0..1] to /DMO/I_Overall_Status_VH as _Status   on $projection.OverallStatus = _Status.OverallStatus
+  composition of exact one to many zizx_booking_m      as _Booking
+  association [0..1]       to /DMO/I_Agency            as _Agency   on $projection.AgencyId = _Agency.AgencyID
+  association [0..1]       to /DMO/I_Customer          as _Customer on $projection.CustomerId = _Customer.CustomerID
+  association [0..1]       to I_Currency               as _Currency on $projection.CurrencyCode = _Currency.Currency
+  association [0..1]       to /DMO/I_Overall_Status_VH as _Status   on $projection.OverallStatus = _Status.OverallStatus
 {
   key ztzx_travel_m.travel_id       as TravelId,
       ztzx_travel_m.agency_id       as AgencyId,
@@ -26,13 +27,19 @@ define view entity zizx_travel_m
       ztzx_travel_m.currency_code   as CurrencyCode,
       ztzx_travel_m.description     as Description,
       ztzx_travel_m.overall_status  as OverallStatus,
+      @Semantics.user.createdBy: true
       ztzx_travel_m.created_by      as CreatedBy,
+      @Semantics.systemDateTime.createdAt: true
       ztzx_travel_m.created_at      as CreatedAt,
+      @Semantics.user.localInstanceLastChangedBy: true
       ztzx_travel_m.last_changed_by as LastChangedBy,
+      //local ETag field --> OData ETag
+      @Semantics.systemDateTime.localInstanceLastChangedAt: true
       ztzx_travel_m.last_changed_at as LastChangedAt,
 
       _Agency,
       _Customer,
       _Currency,
-      _Status
+      _Status,
+      _Booking
 }
