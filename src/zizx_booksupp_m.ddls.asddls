@@ -13,7 +13,7 @@ define view entity zizx_booksupp_m
                                                                  and $projection.BookingId = _Booking.BookingId
   association [1..1] to zizx_travel_m         as _Travel         on  $projection.TravelId = _Travel.TravelId
   association [1..1] to /DMO/I_Supplement     as _Product        on  $projection.BookingSupplementId = _Product.SupplementID
-  association [1..*] to /DMO/I_SupplementText as _SupplementText on  $projection.BookingSupplementId = _SupplementText.SupplementID
+  association [1..*] to /DMO/I_SupplementText as _SupplementText on  $projection.SupplementId = _SupplementText.SupplementID
 
 {
   key ztzx_booksupp_m.travel_id             as TravelId,

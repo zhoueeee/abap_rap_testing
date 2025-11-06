@@ -1,13 +1,16 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Booking Supplement Projection View'
 @Metadata.ignorePropagatedAnnotations: true
+@Metadata.allowExtensions: true
 define view entity ZCZX_BOOKSUPP_M
   as projection on zizx_booksupp_m
 {
   key TravelId,
   key BookingId,
   key BookingSupplementId,
+      @ObjectModel.text.element: [ 'SupplementText' ]
       SupplementId,
+      _SupplementText.Description as SupplementText : localized,
       @Semantics.amount.currencyCode:'CurrencyCode'
       Price,
       CurrencyCode,

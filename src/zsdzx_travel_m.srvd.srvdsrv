@@ -1,4 +1,6 @@
 @EndUserText.label: 'travel services definitions'
 define service ZSDZX_travel_m {
-  expose ZCZX_TRAVEL_M as Travel;
+  expose ZCZX_TRAVEL_M   as Travel;
+  expose ZCZX_BOOKING_M  as Booking;
+  expose ZCZX_BOOKSUPP_M as BookingSuppl;
 }
